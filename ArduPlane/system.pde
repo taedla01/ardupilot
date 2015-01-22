@@ -20,7 +20,9 @@ static int8_t   reboot_board(uint8_t argc, const Menu::arg *argv);
 static int8_t   main_menu_help(uint8_t argc, const Menu::arg *argv)
 {
     cliSerial->printf_P(PSTR("Commands:\n"
+                    #if CLI_LOGGING_ENABLED == ENABLED
                          "  logs        log readback/setup mode\n"
+                    #endif
                     #if CLI_SETUP_ENABLED == ENABLED                
                          "  setup       setup mode\n"
                     #endif
@@ -36,7 +38,9 @@ static int8_t   main_menu_help(uint8_t argc, const Menu::arg *argv)
 static const struct Menu::command main_menu_commands[] PROGMEM = {
 //   command		function called
 //   =======        ===============
+#if CLI_LOGGING_ENABLED == ENABLED
     {"logs",                process_logs},
+#endif    
 #if CLI_SETUP_ENABLED == ENABLED    
     {"setup",               setup_mode},
 #endif

@@ -22,8 +22,18 @@ static const struct Menu::command log_menu_commands[] PROGMEM = {
     {"disable",     select_logs}
 };
 
+#if CLI_LOGGING_ENABLED == ENABLED
 // A Macro to create the Menu
 MENU2(log_menu, "Log", log_menu_commands, print_log_menu);
+
+// Called from the top-level menu to run the logs menu.
+static int8_t
+process_logs(uint8_t argc, const Menu::arg *argv)
+{
+    log_menu.run();
+    return 0;
+}
+#endif// CLI_LOGGING_ENABLED
 
 static bool
 print_log_menu(void)
@@ -155,13 +165,6 @@ select_logs(uint8_t argc, const Menu::arg *argv)
         g.log_bitmask.set_and_save(g.log_bitmask & ~bits);
     }
     return(0);
-}
-
-static int8_t
-process_logs(uint8_t argc, const Menu::arg *argv)
-{
-    log_menu.run();
-    return 0;
 }
 
 struct PACKED log_Attitude {
