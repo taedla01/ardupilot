@@ -915,6 +915,12 @@ static void update_mount(void)
 
 #if CAMERA == ENABLED
     camera.trigger_pic_cleanup();
+    if(camera._feedback_pin != -1 && check_digital_pin(camera._feedback_pin) == 1){
+      gcs_send_message(MSG_CAMERA_FEEDBACK);
+      if (should_log(MASK_LOG_CAMERA)) {
+          DataFlash.Log_Write_Camera(ahrs, gps, current_loc);
+      }      
+    }
 #endif
 }
 
