@@ -661,6 +661,7 @@ static void do_take_picture()
           DataFlash.Log_Write_Camera(ahrs, gps, current_loc);
       }
     }
+    else camera_triggered = false;
 #endif
 }
 
